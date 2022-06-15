@@ -4,22 +4,34 @@
 // сразу преобразуем строки в массивы символов, чтобы можно было обращаться к символам строки по индексу
 //
 
-let haystack = Array("sdgdsdrehujkfhjabbamfsdfkjsdhtiewelmrernjehllfmabdadmgkgfgaba")
-let needle = Array("abba")
+//let haystackString = "sdgdsdrehujkfhjabbamfsdfkjsdhtiewelmrernjehllfmabdadmgkgfgaba"
+//let needleString = "abba"
 
-func findIndex_bruteforce(_ needle: [Character], in haystack: [Character]) -> Int? {
-    for h in 0...(haystack.count - needle.count) {
-        var n = 0
-        while haystack[h + n] == needle[n] {
-            guard n < needle.count - 1 else { return h }
-            n += 1
-        }
+let haystackString = ".KOLOLOKOLOKOLOKOL"
+let needleString = "KOLOKOL"
+
+// 012345678901234567
+// .KOLOLOKOLOKOLOKOL
+//        KOLOKOL
+
+let haystack = Array(haystackString)
+let needle = Array(needleString)
+
+print("🎱 Строка, в которой ищем:", haystackString)
+print("🔍 Строка, которую ищем: \(needleString)\n")
+
+example(of: "Поиск подстроки полным перебором:") {
+    if let index = Finder.findIndex_bruteforce(needle, in: haystack) {
+        print("Найденный индекс:", index)
+    } else {
+        print("Не найдено")
     }
-    return nil
 }
 
-if let index = findIndex_bruteforce(needle, in: haystack) {
-    print("Найдено:", index)
-} else {
-    print("Не найдено")
+example(of: "Поиск подстроки \"оптимизированным\" (таблица сдвигов) перебором:") {
+    if let index = Finder.findIndex_shiftTable(needle, in: haystack) {
+        print("Найденный индекс:", index)
+    } else {
+        print("Не найдено")
+    }
 }
